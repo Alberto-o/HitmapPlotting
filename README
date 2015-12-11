@@ -31,3 +31,10 @@ are noisy during part the of the run, but in the whole run they
 are not 'noisy enough' and as such are not computed as noisy strips
 (see TransientExample.png).
 
+
+### AnalysisMacro.py ###
+
+This macro loops over the 2D histograms, looking for those with
+at least one window with one noisy strips. It saves the 'occupancy
+maps' (scaling the 2D histogram and setting the minimum to 0.015,
+to avoid the rest of strips) to an output file.
