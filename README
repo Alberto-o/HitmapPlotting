@@ -1,0 +1,33 @@
+               ** HITMAPS plotting macro **
+
+The idea is to develop some scripts that will make it easy to
+analyze the 2D hitmaps, where the number of hits for every strip
+is splitted in non-overlapping windows of 10000 events.
+
+The test file is
+
+ data15_hi.00287382.calibration_SCTNoise.sctcal.HITMAP.c0._0002.SCTHitMaps.root
+
+which is under /afs/cern.ch/user/a/agasconb/public
+
+In the 24h calibration loop webpage there's a complete list of
+the noisy strips for this run (287382), for every 'waffer'. That list
+contains the information published in the BadStripSummary xml file:
+those strips with occupancy >= 1.5%
+
+The new 2D histograms allow to check the time dependence of the
+'noisiness' of the strips. There could be strips that:
+* Are noisy because during part of the run had enough hits
+  to be above the 1.5% threshold, even if during other parts
+  of the run they had no hits or;
+* strips that are noisy during a few periods, but in the total
+  run don't sum up enough hits to be considered noisy, 'transient
+  noisy' strips.
+
+One example of the latter is SCTB/0_2_8_-3_02D (barrel, layer 2, phi 8,
+eta -3, side 0; 0 being the first barrel layer). In this module,
+the noisy strips are [697-698 717 749]. Strips 670,700,703 and 744
+are noisy during part the of the run, but in the whole run they
+are not 'noisy enough' and as such are not computed as noisy strips
+(see TransientExample.png).
+
