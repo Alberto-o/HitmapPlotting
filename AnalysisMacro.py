@@ -16,7 +16,7 @@ for key in listB:
         firstBin = H2D.FindFirstBinAbove(0.015)
         if (firstBin != -1):
 #            print keyName
-            H2D.SetMinimum(0.015)
+#            H2D.SetMinimum(0.010)
             c = TCanvas()
             c.SetTitle(H2D.GetTitle())
             H2D.Draw("col4z");
