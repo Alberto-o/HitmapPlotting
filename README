@@ -1,5 +1,7 @@
                ** HITMAPS plotting macro **
 
+# Events #
+
 The idea is to develop some scripts that will make it easy to
 analyze the 2D hitmaps, where the number of hits for every strip
 is splitted in non-overlapping windows of 10000 events.
@@ -32,9 +34,24 @@ are not 'noisy enough' and as such are not computed as noisy strips
 (see TransientExample.png).
 
 
+# Lumiblocks #
+
+In addition to splitting the strip occupancy in windows of a certain
+number of events, the same has been done recording the occupancy
+of each strip in each lumiblock. The other root output file (SCTLB)
+now contains 2D histograms, one for every waffer, where
+the number of hits per strip and lumiblock is stored.
+
+The number of events per lumiblock is not constant. To compute
+the occupancy from the raw number of hits, we have to retrieve
+the number of events per lumiblock from the GENERAL/events
+TH1I histogram
+
 ### AnalysisMacro.py ###
 
 This macro loops over the 2D histograms, looking for those with
 at least one window with one noisy strips. It saves the 'occupancy
 maps' (scaling the 2D histogram and setting the minimum to 0.015,
 to avoid the rest of strips) to an output file.
+
+
