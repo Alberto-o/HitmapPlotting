@@ -66,7 +66,7 @@ ISCT_CalibHistoSvc::binHistograms(const int nLbMerged){
 
   //  int yAxisBins = TMath::Ceil(1.0*totalEventNumber/eventsPerWindow);
   for (std::vector<TH2F *>::iterator it = m_phistoVector2D.begin() ; it != m_phistoVector2D.end(); ++it){
-    (*it)->SetBins(768, -0.5, 768+0.5 ,yAxisBins,0.5,nLb*yAxisBins+0.5);
+    (*it)->SetBins(768, -0.5, 768+0.5 ,yAxisBins,0.5,nLbMerged*yAxisBins+0.5);
   }
   //   std::cout<<eventsPerWindow<<std::endl;
 
