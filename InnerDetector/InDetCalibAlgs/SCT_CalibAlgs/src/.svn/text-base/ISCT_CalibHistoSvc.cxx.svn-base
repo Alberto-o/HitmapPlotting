@@ -56,21 +56,18 @@ ISCT_CalibHistoSvc::getBinForHistogramIndex(const int bin, const int histogramIn
   return result;
 }
 
-void
-//ISCT_CalibHistoSvc::binHistograms(const int eventsPerWindow){
-ISCT_CalibHistoSvc::binHistograms(const int nLbMerged){
+// void
+// ISCT_CalibHistoSvc::binHistograms(const int eventsPerWindow){
 
-  int nLb = numberOfLb();
-  int yAxisBins = TMath::Ceil(1.0*nLb/nLbMerged);
-  //  int totalEventNumber = m_numberOfEventsHisto->GetEntries();
+//   int totalEventNumber = m_numberOfEventsHisto->GetEntries();
 
-  //  int yAxisBins = TMath::Ceil(1.0*totalEventNumber/eventsPerWindow);
-  for (std::vector<TH2F *>::iterator it = m_phistoVector2D.begin() ; it != m_phistoVector2D.end(); ++it){
-    (*it)->SetBins(768, -0.5, 768+0.5 ,yAxisBins,0.5,nLb*yAxisBins+0.5);
-  }
-  //   std::cout<<eventsPerWindow<<std::endl;
+//   int yAxisBins = TMath::Ceil(1.0*totalEventNumber/eventsPerWindow);
+//   for (std::vector<TH2F *>::iterator it = m_phistoVector2D.begin() ; it != m_phistoVector2D.end(); ++it){
+//     (*it)->SetBins(768, -0.5, 768+0.5 ,yAxisBins,0,eventsPerWindow*yAxisBins);
+//   }
+//   //   std::cout<<eventsPerWindow<<std::endl;
 
-}
+// }
 
 void
 ISCT_CalibHistoSvc::setNumberOfLb(const int nLb){

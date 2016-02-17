@@ -1,4 +1,3 @@
-
 /**
 * @file SCTCalib.cxx
 *
@@ -192,8 +191,7 @@ SCTCalib::SCTCalib( const std::string& name, ISvcLocator* pSvcLocator ) :
   declareProperty( "ReadBS",                    m_readBS                     = false );
   declareProperty( "HistBefore2010",            m_histBefore2010             = false );
   declareProperty( "DoHitMaps",                 m_doHitMaps                  = true );
-  declareProperty( "LbsPerWindow",              m_nLbsMerged                  = 20 );
-  //  declareProperty( "EventsPerWindow",           m_eventsPerWindow            = 10000 );
+  declareProperty( "EventsPerWindow",           m_eventsPerWindow            = 10000 );
   declareProperty( "ReadHitMaps",               m_readHitMaps                = false );
   declareProperty( "DoBSErrors",                m_doBSErrors                 = false );
   declareProperty( "DoNoisyStrip",              m_doNoisyStrip               = true );
@@ -527,7 +525,7 @@ StatusCode SCTCalib::endRun(){
   //    ISCT_CalibHistoSvc::binHistograms(m_eventsPerWindow);
   //    ISCT_CalibHistoSvc::setNumberOfLb(m_LBRange);
 
-  if ( m_doNoisyLB ) m_calibLbSvc->binHistograms(m_nLbsMerged);
+  //  if ( m_doHitMaps ) m_calibHitmapSvc->binHistograms(m_eventsPerWindow);
 
   //--- IOV range defined by RunNumber and LB
   unsigned int beginRun = (int) m_runNumber;

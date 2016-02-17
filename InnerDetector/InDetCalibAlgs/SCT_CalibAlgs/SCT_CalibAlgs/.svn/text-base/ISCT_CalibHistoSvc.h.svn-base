@@ -15,7 +15,6 @@
 #include <string>
 #include <utility>
 class TH1F;
-class TH2F;
 class TH1I;
 class ITHistSvc;
 class SCT_ID;
@@ -43,14 +42,13 @@ class ISCT_CalibHistoSvc: virtual public IInterface{
     double getBinForHistogramIndex(const int bin, const int histogramIndex);
     /// get the number of entries in a given histogram
     int size(const int histogramIndex);
-    void binHistograms(const int nLbMerged);
+    void binHistograms(const int eventsPerWindow);
     /// set number of lumiblocks
     static void setNumberOfLb(const int nLb);
     /// get number of lumiblocks
     static int numberOfLb();
   protected:
     std::vector<TH1F *> m_phistoVector;
-    std::vector<TH2F *> m_phistoVector2D;
     TH1I * m_numberOfEventsHisto;
     ITHistSvc * m_thistSvc;
     //need to implement retrieval for these
