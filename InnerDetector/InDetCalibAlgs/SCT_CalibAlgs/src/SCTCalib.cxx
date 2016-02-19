@@ -372,6 +372,7 @@ StatusCode SCTCalib::initialize(){
       m_LBRange = 0;
   }
 
+  ISCT_CalibHistoSvc::setLbToMerge(m_nLbsMerged);
  
 
   m_readHIST = m_doNoiseOccupancy || m_doRawOccupancy || m_doEfficiency || m_doBSErrorDB || m_doLorentzAngle;
@@ -522,12 +523,8 @@ StatusCode SCTCalib::endRun(){
   m_numberOfEvents = (m_readHIST || (!m_doHitMaps && m_readHitMaps)) ? m_numberOfEventsHist : m_calibEvtInfoSvc->counter();
   m_calibEvtInfoSvc->getTimeStamps(m_utcBegin,m_utcEnd); 
   
-  // if ( m_doHitMaps )
-  //   m_calibHitmapSvc->binHistograms(m_eventsPerWindow);
-  //    ISCT_CalibHistoSvc::binHistograms(m_eventsPerWindow);
-  //    ISCT_CalibHistoSvc::setNumberOfLb(m_LBRange);
 
-  if ( m_doNoisyLB ) m_calibLbSvc->binHistograms(m_nLbsMerged);
+  //  if ( m_doNoisyLB ) m_calibLbSvc->binHistograms(m_nLbsMerged);
 
   //--- IOV range defined by RunNumber and LB
   unsigned int beginRun = (int) m_runNumber;

@@ -48,6 +48,10 @@ class ISCT_CalibHistoSvc: virtual public IInterface{
     static void setNumberOfLb(const int nLb);
     /// get number of lumiblocks
     static int numberOfLb();
+    /// set number of lumiblocks
+    static void setLbToMerge(const int nLbMerge);
+    /// get number of lumiblocks
+    static int LbToMerge();
   protected:
     std::vector<TH1F *> m_phistoVector;
     std::vector<TH2F *> m_phistoVector2D;
@@ -58,6 +62,7 @@ class ISCT_CalibHistoSvc: virtual public IInterface{
     //ServiceHandle<StoreGateSvc> m_evtStore;
     const SCT_ID* m_pSCTHelper;
     static int m_nLb;
+    static int m_nLbMerge;
     //
     bool init();
     template<class S>

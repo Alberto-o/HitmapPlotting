@@ -29,7 +29,7 @@
 #include "TH1F.h"
 #include "TH2F.h"
 #include "TFile.h"
-
+#include "TMath.h"
 
 using namespace std;
 using namespace SCT_CalibAlgs;
@@ -52,7 +52,8 @@ m_sct_waferHash(0),
 m_sct_firstStrip(0),
 m_sct_rdoGroupSize(0),
 m_lumiBlock(0),
-m_LbRange(0){
+m_LbRange(0),
+m_LbsToMerge(0){
   //nop
 }
 
@@ -101,7 +102,11 @@ SCT_CalibLbSvc::book(){
   string histoName=pathRoot+"GENERAL/";
   m_LbRange=numberOfLb();
   m_numberOfEventsHisto=new TH1I("events","Events",m_LbRange,0.5,m_LbRange+0.5);
-  //std::cout<<"new of m_numberOfEventsHisto, value = "<<m_numberOfEventsHisto<<std::endl;
+
+  m_LbsToMerge = LbToMerge();
+  int yAxisBins = TMath::Ceil(1.0*m_LbRange/m_LbsToMerge);
+
+
   if( m_thistSvc->regHist( histoName.c_str(), m_numberOfEventsHisto ).isFailure() ) {
     msg( MSG::ERROR ) << "Error in booking EventNumber histogram" << endreq;
   }
@@ -119,10 +124,11 @@ SCT_CalibLbSvc::book(){
     const string formattedPosition=formatPosition(waferId, m_pSCTHelper)+"_";
     ////
     std::string histotitle = string( "SCT " ) + detectorNames[ bec2Index(bec) ] + string( " Hitmap: plane " ) + formattedPosition;
-    std::string formattedPosition2D = formattedPosition+"2D";
+    std::string formattedPosition2D = formattedPosition+"_2D";
     std::string name2D=hitmapPaths[bec2Index(m_pSCTHelper->barrel_ec( waferId ))] + formattedPosition + "_2D";
-    TH2F* hitmapHistoLB_tmp2D = new TH2F( TString( formattedPosition2D ), TString( histotitle ), nbins, firstStrip-0.5, lastStrip+0.5 ,1,0,0);
-    hitmapHistoLB_tmp2D->GetYaxis()->SetCanExtend(kTRUE);
+    //    TH2F* hitmapHistoLB_tmp2D = new TH2F( TString( formattedPosition2D ), TString( histotitle ), nbins, firstStrip-0.5, lastStrip+0.5 ,1,0,0);
+    TH2F* hitmapHistoLB_tmp2D = new TH2F( TString( formattedPosition2D ), TString( histotitle ), nbins, firstStrip-0.5, lastStrip+0.5 ,yAxisBins,0.5,m_LbsToMerge*yAxisBins+0.5);
+    //    hitmapHistoLB_tmp2D->GetYaxis()->SetCanExtend(kTRUE);
     //    TH2F* hitmapHistoLB_tmp2D = new TH2F( TString( formattedPosition2D ), TString( histotitle ), nbins, firstStrip-0.5, lastStrip+0.5 ,m_LbRange,0.5,m_LbRange+0.5);
     if(m_thistSvc->regHist( name2D.c_str(), hitmapHistoLB_tmp2D ).isFailure() ) {
       msg( MSG::ERROR ) << "Error in booking 2D Hitmap histogram" << endreq;
@@ -173,8 +179,10 @@ SCT_CalibLbSvc::read(const std::string & fileName){
     const int bec(m_pSCTHelper->barrel_ec(waferId));
     const string formattedPosition=formatPosition(waferId, m_pSCTHelper)+"_";
     ////
-    std::string name2D=detectorPaths[bec2Index(m_pSCTHelper->barrel_ec( waferId ))] + formattedPosition + "2D";
+    std::string name2D=detectorPaths[bec2Index(m_pSCTHelper->barrel_ec( waferId ))] + formattedPosition + "_2D";
     TH2F* hitmapHistoLB_tmp2D = (TH2F*) fileLB->Get(name2D.c_str());
+    //    hitmapHistoLB_tmp2D->GetYaxis()->SetCanExtend(kTRUE);
+
     if( hitmapHistoLB_tmp2D==NULL ) {
       msg( MSG::ERROR ) << "Error in reading Hitmap histogram" << endreq;
     } else {
@@ -209,6 +217,8 @@ SCT_CalibLbSvc::fill(const bool fromData){
      int endStrip      = (*m_sct_rdoGroupSize)[i] + theFirstStrip;
      int index         = (*m_sct_waferHash)[i];
      TH2F * pThisHisto2D=m_phistoVector2D[ index ];
+     //     pThisHisto2D->GetYaxis()->SetCanExtend(kTRUE);
+
      for( int strip(theFirstStrip); strip !=endStrip; ++strip) {
        pThisHisto2D->Fill( strip, m_lumiBlock);
      }

@@ -1,3 +1,4 @@
+
 /**
  * @file ISCT_CalibHistoSvc.cxx
  * Implementation file to interface class for histograms in the SCT_CalibAlgs package
@@ -11,6 +12,7 @@
 #include <stdexcept> // out_of_range exception
 
 int ISCT_CalibHistoSvc::m_nLb=0;
+int ISCT_CalibHistoSvc::m_nLbMerge=0;
 
 ISCT_CalibHistoSvc::ISCT_CalibHistoSvc():m_numberOfEventsHisto(0),m_thistSvc(0),m_pSCTHelper(0){
   //std::cout<<"Instantiation of ISCT_CalibHistoSvc"<<std::endl;
@@ -80,5 +82,15 @@ ISCT_CalibHistoSvc::setNumberOfLb(const int nLb){
 int
 ISCT_CalibHistoSvc::numberOfLb(){
   return m_nLb;
+}
+
+void
+ISCT_CalibHistoSvc::setLbToMerge(const int nLbMerge){
+  m_nLbMerge=nLbMerge;
+}
+
+int
+ISCT_CalibHistoSvc::LbToMerge(){
+  return m_nLbMerge;
 }
 
